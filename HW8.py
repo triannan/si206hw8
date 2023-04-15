@@ -45,8 +45,9 @@ def plot_rest_categories(db):
         cur = conn.execute("SELECT COUNT(category_id) FROM restaurants WHERE category_id == ?", (category[0], ))
         count = cur.fetchone()
         dic[category[1]] = count[0]
-    category_name = list(dic.keys())
-    category_count = list(dic.values())
+    sorted_dic = sorted(dic.items(), key=lambda x:x[1])
+    category_name = [i[0] for i in sorted_dic]
+    category_count = [i[1] for i in sorted_dic]
     plt.barh(category_name, category_count)
     plt.xlabel("Restaurant Category")
     plt.ylabel("Restaurant Count")
